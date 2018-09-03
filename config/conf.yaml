@@ -1,0 +1,3 @@
+PORT: 8200
+
+MYSQL_DSN: root:liubiao@tcp(127.0.0.1:3306)/robo_user_v2?charset=utf8
