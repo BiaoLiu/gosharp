@@ -2,4 +2,4 @@ PORT: 8200
 
 SSO_HOST: https://xx.com/sso
 
-MYSQL_DSN: xx:xx@2025@tcp(127.0.0.1:3306)/robo_user_v2?charset=utf8
+MYSQL_DSN: xx:xxxx@tcp(127.0.0.1:3306)/robo_user_v2?charset=utf8
