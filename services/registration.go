@@ -4,7 +4,6 @@ import (
 	"github.com/astaxie/beego/validation"
 	"gosharp/db"
 	"gosharp/forms"
-	"gosharp/utils/auth"
 	"gosharp/utils/log"
 )
 
@@ -17,10 +16,6 @@ func Login(form *forms.LoginForm) []*validation.Error {
 		}
 		v.SetError("username", "用户名或密码错误")
 		return v.Errors
-	}
-
-	if !auth.CheckPassword(form.Password, form.User.Password) {
-		v.SetError("username", "用户名或密码错误")
 	}
 
 	if form.User.IsActive == 0 {

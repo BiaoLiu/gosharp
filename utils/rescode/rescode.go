@@ -8,4 +8,8 @@ const (
 	Token_Timed_Out = "20002"
 	Token_Invalid   = "20003"
 	Login_Timed_Out = "20004"
+	//授权
+	Access_Denied = "30001"
+
+	FileUpload_Error = "40001"
 )
