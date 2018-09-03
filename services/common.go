@@ -1,4 +1,4 @@
-package common_serivce
+package services
 
 import (
 	"net/url"
