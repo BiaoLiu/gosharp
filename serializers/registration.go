@@ -10,11 +10,11 @@ type UserSerializer struct {
 }
 
 type UserResponse struct {
-	Id          int       `json:"id"`
-	Username    string    `json:"username"`
-	Mobile      string    `json:"mobile"`
-	Email       string    `json:"email"`
-	CreatedTime time.Time `json:"created_time"`
+	Id          int       `json:"id" example:"1"`
+	Username    string    `json:"username" example:"用户名"`
+	Mobile      string    `json:"mobile" example:"手机号码"`
+	Email       string    `json:"email" example:"邮箱"`
+	CreatedTime time.Time `json:"created_time" example:"创建时间"`
 }
 
 func (s *UserSerializer) Response() UserResponse {

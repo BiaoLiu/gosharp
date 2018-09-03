@@ -9,6 +9,13 @@ import (
 	"gosharp/services"
 )
 
+// @Tags 登录注册模块
+// @Summary 登录
+// @Produce  json
+// @Param username query string true "用户名"
+// @Param password query string true "密码"
+// @Success 200 {object} serializers.UserResponse
+// @Router /login [post]
 func PostLogin(c *gin.Context) {
 	form := forms.LoginForm{}
 	if !bindAndValidateForm(c, &form) {
@@ -25,6 +32,11 @@ func PostLogin(c *gin.Context) {
 	APIResponse(c, true, serializer.Response(), "")
 }
 
+// @Tags 测试模块
+// @Summary 测试
+// @Produce  json
+// @Success 200 {string}  success
+// @Router /test [get]
 func Test(c *gin.Context) {
 	value, _ := c.Cookie("robo2025")
 

@@ -1,0 +1,71 @@
+basePath: /
+definitions:
+  serializers.UserResponse:
+    properties:
+      created_time:
+        example: 创建时间
+        type: string
+      email:
+        example: 邮箱
+        type: string
+      id:
+        example: 1
+        type: integer
+      mobile:
+        example: 手机号码
+        type: string
+      username:
+        example: 用户名
+        type: string
+    type: object
+host: localhost:8200
+info:
+  contact:
+    email: support@swagger.io
+    name: API Support
+    url: http://www.swagger.io/support
+  description: This is a sample server Petstore server.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: gosharp API
+  version: "1.0"
+paths:
+  /login:
+    post:
+      parameters:
+      - description: 用户名
+        in: query
+        name: username
+        required: true
+        type: string
+      - description: 密码
+        in: query
+        name: password
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            $ref: '#/definitions/serializers.UserResponse'
+            type: object
+      summary: 登录
+      tags:
+      - 登录注册模块
+  /test:
+    get:
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            type: string
+      summary: 测试
+      tags:
+      - 测试模块
+swagger: "2.0"
