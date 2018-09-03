@@ -6,7 +6,7 @@ import (
 	"github.com/gorilla/securecookie"
 	"gosharp/forms"
 	"gosharp/serializers"
-	"gosharp/services"
+	"gosharp/services/registration_service"
 )
 
 // @Tags 登录注册模块
@@ -25,7 +25,7 @@ func PostLogin(c *gin.Context) {
 	token := c.Request.Header["Authorization"]
 	fmt.Println(token)
 	//登录
-	err := services.Login(&form)
+	err := registration_service.Login(&form)
 	if err != nil {
 		setError(c, err)
 		return

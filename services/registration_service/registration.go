@@ -1,4 +1,4 @@
-package services
+package registration_service
 
 import (
 	"github.com/astaxie/beego/validation"
