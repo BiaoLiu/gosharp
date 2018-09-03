@@ -25,9 +25,7 @@ info:
     name: API Support
     url: http://www.swagger.io/support
   description: This is a sample server Petstore server.
-  license:
-    name: Apache 2.0
-    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  license: {}
   termsOfService: http://swagger.io/terms/
   title: gosharp API
   version: "1.0"
@@ -53,6 +51,8 @@ paths:
           schema:
             $ref: '#/definitions/serializers.UserResponse'
             type: object
+      security:
+      - Token: []
       summary: 登录
       tags:
       - 登录注册模块
@@ -65,7 +65,14 @@ paths:
           description: OK
           schema:
             type: string
+      security:
+      - Token: []
       summary: 测试
       tags:
       - 测试模块
+securityDefinitions:
+  Token:
+    in: header
+    name: Authorization
+    type: apiKey
 swagger: "2.0"

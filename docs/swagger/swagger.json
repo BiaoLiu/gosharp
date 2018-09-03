@@ -9,10 +9,7 @@
             "url": "http://www.swagger.io/support",
             "email": "support@swagger.io"
         },
-        "license": {
-            "name": "Apache 2.0",
-            "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
-        },
+        "license": {},
         "version": "1.0"
     },
     "host": "localhost:8200",
@@ -20,6 +17,11 @@
     "paths": {
         "/login": {
             "post": {
+                "security": [
+                    {
+                        "Token": []
+                    }
+                ],
                 "produces": [
                     "application/json"
                 ],
@@ -56,6 +58,11 @@
         },
         "/test": {
             "get": {
+                "security": [
+                    {
+                        "Token": []
+                    }
+                ],
                 "produces": [
                     "application/json"
                 ],
@@ -99,6 +106,13 @@
                     "example": "用户名"
                 }
             }
+        }
+    },
+    "securityDefinitions": {
+        "Token": {
+            "type": "apiKey",
+            "name": "Authorization",
+            "in": "header"
         }
     }
 }

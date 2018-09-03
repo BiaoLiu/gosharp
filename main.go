@@ -20,11 +20,12 @@ import (
 // @contact.url http://www.swagger.io/support
 // @contact.email support@swagger.io
 
-// @license.name Apache 2.0
-// @license.url http://www.apache.org/licenses/LICENSE-2.0.html
-
 // @host localhost:8200
 // @BasePath /
+
+// @securityDefinitions.apikey Token
+// @in header
+// @name Authorization
 func main() {
 	engine := gin.Default()
 	//配置文件初始化

@@ -15,12 +15,15 @@ import (
 // @Param username query string true "用户名"
 // @Param password query string true "密码"
 // @Success 200 {object} serializers.UserResponse
+// @Security Token
 // @Router /login [post]
 func PostLogin(c *gin.Context) {
 	form := forms.LoginForm{}
 	if !bindAndValidateForm(c, &form) {
 		return
 	}
+	token := c.Request.Header["Authorization"]
+	fmt.Println(token)
 	//登录
 	err := services.Login(&form)
 	if err != nil {
@@ -36,6 +39,7 @@ func PostLogin(c *gin.Context) {
 // @Summary 测试
 // @Produce  json
 // @Success 200 {string}  success
+// @Security Token
 // @Router /test [get]
 func Test(c *gin.Context) {
 	value, _ := c.Cookie("robo2025")
