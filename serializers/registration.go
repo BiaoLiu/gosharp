@@ -19,10 +19,10 @@ type UserResponse struct {
 
 func (s *UserSerializer) Response() UserResponse {
 	return UserResponse{
-		Id:          s.User.Id,
+		Id:          s.User.ID,
 		Username:    s.User.Username,
 		Mobile:      s.User.Mobile,
-		Email:       s.User.Email,
+		Email:       s.User.Email.String,
 		CreatedTime: s.User.DateJoined,
 	}
 }

@@ -1,19 +1,23 @@
 package models
 
 import (
+	"database/sql"
 	"time"
 )
 
 type AuthUser struct {
-	Id         int       `xorm:"not null pk autoincr INT(11)"`
-	Username   string    `xorm:"not null VARCHAR(150)"`
-	Password   string    `xorm:"not null VARCHAR(128)"`
-	Mobile     string    `xorm:"not null VARCHAR(20)"`
-	Realname   string    `xorm:"VARCHAR(20)"`
-	Gender     int       `xorm:"TINYINT(4)"`
-	Email      string    `xorm:"VARCHAR(254)"`
-	IsActive   int       `xorm:"not null TINYINT(4)"`
-	DateJoined time.Time `xorm:"not null DATETIME"`
-	LastLogin  time.Time `xorm:"DATETIME"`
-	IsDeleted  int       `xorm:"not null default 0 TINYINT(4)"`
+	ID         int            `gorm:"column:id"`
+	Mobile     string         `gorm:"column:mobile"`
+	Password   sql.NullString `gorm:"column:password"`
+	Realname   sql.NullString `gorm:"column:realname"`
+	UserType   int            `gorm:"column:user_type"`
+	Username   string         `gorm:"column:username"`
+	DateJoined time.Time      `gorm:"column:date_joined"`
+	Email      sql.NullString `gorm:"column:email"`
+	Gender     sql.NullInt64  `gorm:"column:gender"`
+	IsActive   int            `gorm:"column:is_active"`
+	IsDeleted  int            `gorm:"column:is_deleted"`
+	IsSubuser  int            `gorm:"column:is_subuser"`
+	LastLogin  time.Time      `gorm:"column:last_login"`
+	MainUserID int            `gorm:"column:main_user_id"`
 }
