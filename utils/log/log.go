@@ -18,14 +18,17 @@ func GetLogger() *logrus.Logger {
 	return Logger
 }
 
-func Init() {
+func Init(logPath string) {
 	Logger = logrus.New()
 	level, err := logrus.ParseLevel(config.Viper.GetString("LOG_LEVEL"))
 	if err != nil {
 		level = logrus.DebugLevel
 	}
 	Logger.SetLevel(level)
-	ConfigLocalFilesystemLogger("logs", "", time.Hour*24, time.Hour*24)
+	if logPath == "" {
+		logPath = "logs"
+	}
+	ConfigLocalFilesystemLogger(logPath, "", time.Hour*24, time.Hour*24)
 }
 
 func ConfigLocalFilesystemLogger(logPath string, logFileName string, maxAge time.Duration, rotationTime time.Duration) {

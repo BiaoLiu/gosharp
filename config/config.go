@@ -9,14 +9,19 @@ var Viper *viper.Viper
 
 // Init is an exported method that takes the environment starts the viper
 // (external lib) and returns the configuration struct.
-func Init() {
+func Init(configPath string) {
 	var err error
 	v := viper.New()
 	//v.SetConfigType("yaml")
 	v.AutomaticEnv()
 	v.SetConfigName("conf")
 	//v.AddConfigPath("../config/")
-	v.AddConfigPath("config/")
+	if configPath == "" {
+		v.AddConfigPath("config/")
+	} else {
+		v.AddConfigPath(configPath)
+	}
+
 	err = v.ReadInConfig()
 	if err != nil {
 		panic("error on parsing configuration file")

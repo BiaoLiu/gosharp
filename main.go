@@ -29,10 +29,9 @@ import (
 func main() {
 	engine := gin.Default()
 	//配置文件初始化
-
-	config.Init()
+	config.Init("config")
 	//日志初始化
-	log.Init()
+	log.Init("logs")
 	//数据库初始化
 	db.Init()
 	defer db.Close()
