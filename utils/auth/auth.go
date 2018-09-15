@@ -27,7 +27,7 @@ type User struct {
 	Permissions []string
 }
 
-func GetUser(c *gin.Context) (user *User, status int, res string, msg string) {
+func GetUser(c *gin.Context) (user *User, status int, resCode string, msg string) {
 	token := c.Request.Header["Authorization"]
 	if len(token) == 0 {
 		return nil, 400, rescode.Token_Missing, "token不存在"
@@ -43,6 +43,7 @@ func GetUser(c *gin.Context) (user *User, status int, res string, msg string) {
 	}
 	client := &http.Client{Transport: tr}
 	resp, err := client.Do(req)
+	status = resp.StatusCode
 	if err != nil {
 		log.Logger.Error("sso verify request error:", err.Error())
 		return nil, 500, rescode.Error, "服务器异常，登录授权验证失败"
@@ -51,8 +52,12 @@ func GetUser(c *gin.Context) (user *User, status int, res string, msg string) {
 
 	result, err := ioutil.ReadAll(resp.Body)
 	js, err := simplejson.NewJson(result)
-	data, err := js.Get("data").MarshalJSON()
-	json.Unmarshal(data, &user)
 
-	return user, 200, "", ""
+	resCode = js.Get("rescode").MustString()
+	msg = js.Get("msg").MustString()
+	if resCode == rescode.Success {
+		data, _ := js.Get("data").MarshalJSON()
+		json.Unmarshal(data, &user)
+	}
+	return
 }
