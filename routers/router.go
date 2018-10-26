@@ -27,4 +27,6 @@ func Register(router *gin.Engine) {
 
 	router.GET("/test", controllers.Test)
 
+	router.GET("/testconsul", controllers.TestConsul)
+
 }

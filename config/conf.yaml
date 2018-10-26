@@ -2,4 +2,4 @@ PORT: 8200
 
 SSO_HOST: https://xx.com/sso
 
-MYSQL_DSN: root:robo@2025@tcp(bj-cdb-nwi3nzcr.sql.tencentcdb.com:63668)/test_robo_user?charset=utf8
+MYSQL_DSN: root:liubiao123456@tcp(localhost:3306)/test_robo_user?charset=utf8

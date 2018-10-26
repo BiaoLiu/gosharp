@@ -30,7 +30,7 @@ func PostLogin(c *gin.Context) {
 		setError(c, err)
 		return
 	}
-	serializer := serializers.UserSerializer{form.User}
+	serializer := serializers.UserSerializer{User: form.User}
 
 	APIResponse(c, true, serializer.Response(), "")
 }

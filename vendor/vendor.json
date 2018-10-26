@@ -360,7 +360,7 @@
 		},
 		{
 			"checksumSHA1": "zUU/5ngbbNgOmi63Y5njMPI4BDo=",
-			"path": "github.com/stretchr/testify/assert",
+			"path": "github.com/stretchr/testify/assergot",
 			"revision": "f35b8ab0b5a2cef36673838d662e249dd9c94686",
 			"revisionTime": "2018-05-06T18:05:49Z"
 		},

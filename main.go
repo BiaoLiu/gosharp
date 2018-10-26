@@ -8,7 +8,6 @@ import (
 	"gosharp/middlewares"
 	"gosharp/routers"
 	"gosharp/startup"
-	"gosharp/utils/log"
 )
 
 // @title gosharp API
@@ -28,15 +27,11 @@ import (
 // @name Authorization
 func main() {
 	engine := gin.Default()
-	//配置文件初始化
-	config.Init("config")
-	//日志初始化
-	log.Init("logs")
+	//配置初始化
+	server.Init("config", "logs")
 	//数据库初始化
 	db.Init()
 	defer db.Close()
-	//gin配置初始化
-	server.Init(engine)
 
 	//注册中间件
 	middlewares.Register(engine)
