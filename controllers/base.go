@@ -42,7 +42,7 @@ func formatErrorMsg(errors []*validation.Error) string {
 }
 
 //设置统一返回错误信息
-func setError(c *gin.Context, errors []*validation.Error) {
+func CheckError(c *gin.Context, errors []*validation.Error) {
 	errorMsg := formatErrorMsg(errors)
 	APIResponse(c, false, nil, errorMsg)
 	return

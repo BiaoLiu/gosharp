@@ -3,7 +3,6 @@ package main
 import (
 	"github.com/gin-gonic/gin"
 	"gosharp/config"
-	"gosharp/db"
 	_ "gosharp/docs"
 	"gosharp/middlewares"
 	"gosharp/routers"
@@ -27,11 +26,8 @@ import (
 // @name Authorization
 func main() {
 	engine := gin.Default()
-	//配置初始化
+	//初始化
 	server.Init("config", "logs")
-	//数据库初始化
-	db.Init()
-	defer db.Close()
 
 	//注册中间件
 	middlewares.Register(engine)

@@ -2,6 +2,7 @@ package server
 
 import (
 	"gosharp/config"
+	"gosharp/db"
 	"gosharp/utils/log"
 	"gosharp/utils/validation"
 )
@@ -11,7 +12,8 @@ func Init(configPath string, logPath string) {
 	config.Init(configPath)
 	//日志初始化
 	log.Init(logPath)
-
+	//数据库初始化
+	db.Init()
 	//设置beego validation 错误信息
 	validation.SetValidationMessage()
 }

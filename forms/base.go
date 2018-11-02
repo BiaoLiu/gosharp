@@ -6,7 +6,7 @@ import (
 
 type Form interface {
 	IsValid(form Form) (bool, []*validation.Error)
-	Save() interface{}
+	//Save() interface{}
 }
 
 type BaseForm struct {
@@ -27,6 +27,6 @@ func (form *BaseForm) IsValid(validForm Form) (bool, []*validation.Error) {
 }
 
 //表单保存操作
-func (form *BaseForm) Save() interface{} {
-	return nil
-}
+//func (form *BaseForm) Save() interface{} {
+//	return nil
+//}

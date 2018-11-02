@@ -28,7 +28,6 @@ var requestTests = []struct {
 
 func TestLogin(t *testing.T) {
 	asserts := assert.New(t)
-
 	engine := NewEngine()
 
 	for _, testData := range requestTests {

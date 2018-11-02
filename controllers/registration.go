@@ -27,7 +27,7 @@ func PostLogin(c *gin.Context) {
 	//登录
 	err := services.Login(&form)
 	if err != nil {
-		setError(c, err)
+		CheckError(c, err)
 		return
 	}
 	serializer := serializers.UserSerializer{User: form.User}
