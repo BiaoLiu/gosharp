@@ -2,8 +2,6 @@ package routers
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/swaggo/gin-swagger"
-	"github.com/swaggo/gin-swagger/swaggerFiles"
 	"gosharp/controllers"
 	"gosharp/utils/rescode"
 	"net/http"
@@ -21,11 +19,11 @@ func errorWrapper(handler gin.HandlerFunc) func(c *gin.Context) {
 }
 
 func Register(router *gin.Engine) {
-	router.GET("/swagger/*any", ginSwagger.WrapHandler(swaggerFiles.Handler))
-
 	router.POST("/login", controllers.PostLogin)
 
 	router.GET("/test", controllers.Test)
+	router.GET("/test/swag-operation", controllers.TestSwagOperation)
+	router.GET("/test/swag-route", controllers.TestSwagRoute)
 
 	router.GET("/testconsul", controllers.TestConsul)
 

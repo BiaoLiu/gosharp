@@ -5,8 +5,11 @@ import (
 	"time"
 )
 
-type UserSerializer struct {
-	User *models.AuthUser
+// 用户信息
+// swagger:response userResponseWrap
+type userResponseWrap struct {
+	// in:body
+	Body UserResponse
 }
 
 type UserResponse struct {
@@ -15,6 +18,10 @@ type UserResponse struct {
 	Mobile      string    `json:"mobile" example:"手机号码"`
 	Email       string    `json:"email" example:"邮箱"`
 	CreatedTime time.Time `json:"created_time" example:"创建时间"`
+}
+
+type UserSerializer struct {
+	User *models.AuthUser
 }
 
 func (s *UserSerializer) Response() UserResponse {

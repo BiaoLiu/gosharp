@@ -1,29 +1,29 @@
+// Package classification gosharp API.
+//
+// gosharp API
+//
+//      Host: localhost:9000
+//      Version: 1.0.0
+//
+//      Security:
+//      - Token:
+//
+//      SecurityDefinitions:
+//      Token:
+//           type: apiKey
+//           name: Authorization
+//           in: header
+// swagger:meta
 package main
 
 import (
 	"github.com/gin-gonic/gin"
 	"gosharp/config"
-	_ "gosharp/docs"
 	"gosharp/middlewares"
 	"gosharp/routers"
 	"gosharp/startup"
 )
 
-// @title gosharp API
-// @version 1.0
-// @description This is a sample server Petstore server.
-// @termsOfService http://swagger.io/terms/
-
-// @contact.name API Support
-// @contact.url http://www.swagger.io/support
-// @contact.email support@swagger.io
-
-// @host localhost:8200
-// @BasePath /
-
-// @securityDefinitions.apikey Token
-// @in header
-// @name Authorization
 func main() {
 	engine := gin.Default()
 	//初始化
