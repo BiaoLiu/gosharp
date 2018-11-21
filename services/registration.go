@@ -11,7 +11,6 @@ func Login(form *forms.LoginForm) error {
 	if form.User == nil {
 		return errors.New("用户名或密码错误")
 	}
-
 	if form.User.IsActive == 0 {
 		return errors.New("用户已被禁用，无法登录")
 	}
