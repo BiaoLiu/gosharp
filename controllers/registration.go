@@ -11,17 +11,19 @@ import (
 
 func PostLogin(c *gin.Context) {
 	form := forms.LoginForm{}
-	if !bindAndValidateForm(c, &form) {
+	if err := bindAndValidateForm(c, &form); err != nil {
+		APIResponse(c, false, nil, err.Error())
 		return
 	}
 	token := c.Request.Header["Authorization"]
 	fmt.Println(token)
+
 	//登录
-	err := services.Login(&form)
-	if err != nil {
-		CheckError(c, err)
+	if err := services.Login(&form); err != nil {
+		APIResponse(c, false, nil, err.Error())
 		return
 	}
+
 	serializer := serializers.UserSerializer{User: form.User}
 
 	APIResponse(c, true, serializer.Response(), "")
@@ -53,7 +55,8 @@ func TestSwagOperation(c *gin.Context) {
 //   200: userResponseWrap
 func TestSwagRoute(c *gin.Context) {
 	var form forms.LoginForm
-	if !bindAndValidateForm(c, &form) {
+	if err := bindAndValidateForm(c, &form); err != nil {
+		APIResponse(c, false, nil, err.Error())
 		return
 	}
 

@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"errors"
 	"fmt"
 	"github.com/astaxie/beego/validation"
 	"github.com/gin-gonic/gin"
@@ -12,40 +13,30 @@ import (
 )
 
 //表单绑定与表单验证
-func bindAndValidateForm(c *gin.Context, form forms.Form) bool {
-	if !bindForm(c, form) {
-		return false
+func bindAndValidateForm(c *gin.Context, form forms.Form) error {
+	if err := bindForm(c, form); err != nil {
+		return err
 	}
-	if ok, errors := form.IsValid(form); !ok {
-		errorMsg := formatErrorMsg(errors)
-		APIResponse(c, false, nil, errorMsg)
-		return false
+	if ok, validationErrors := form.IsValid(form); !ok {
+		errorMsg := formatValidationError(validationErrors)
+		return errors.New(errorMsg)
 	}
-	return true
+	return nil
 }
 
 //表单绑定
-func bindForm(c *gin.Context, form forms.Form) bool {
+func bindForm(c *gin.Context, form forms.Form) error {
 	b := binding.Default(c.Request.Method, c.ContentType())
 	if err := c.ShouldBindWith(form, b); err != nil {
-		err := err.Error()
-		APIResponseException(c, "参数绑定失败:"+err)
-		return false
+		return errors.New("参数绑定失败:" + err.Error())
 	}
-	return true
+	return nil
 }
 
-//格式化错误信息
-func formatErrorMsg(errors []*validation.Error) string {
+//格式化验证器错误信息
+func formatValidationError(errors []*validation.Error) string {
 	err := errors[0]
 	return fmt.Sprintf("%s:%s", strings.ToLower(err.Field), err.Message)
-}
-
-//设置统一返回错误信息
-func CheckError(c *gin.Context, errors []*validation.Error) {
-	errorMsg := formatErrorMsg(errors)
-	APIResponse(c, false, nil, errorMsg)
-	return
 }
 
 /**
@@ -65,6 +56,11 @@ func APIResponse(c *gin.Context, success bool, data interface{}, msg string) {
 		}
 	}
 	c.JSON(http.StatusOK, gin.H{"rescode": resCode, "data": data, "msg": msg})
+}
+
+//自定义错误码
+func APIResponseError(c *gin.Context, rescode string, data interface{}, msg string) {
+	c.JSON(http.StatusOK, gin.H{"rescode": rescode, "data": data, "msg": msg})
 }
 
 //400
