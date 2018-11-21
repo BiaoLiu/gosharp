@@ -59,6 +59,10 @@
   "definitions": {
     "LoginForm": {
       "type": "object",
+      "required": [
+        "username",
+        "password"
+      ],
       "properties": {
         "password": {
           "description": "密码",

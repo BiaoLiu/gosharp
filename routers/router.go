@@ -23,7 +23,7 @@ func Register(router *gin.Engine) {
 
 	router.GET("/test", controllers.Test)
 	router.GET("/test/swag-operation", controllers.TestSwagOperation)
-	router.GET("/test/swag-route", controllers.TestSwagRoute)
+	router.POST("/test/swag-route", controllers.TestSwagRoute)
 
 	router.GET("/testconsul", controllers.TestConsul)
 

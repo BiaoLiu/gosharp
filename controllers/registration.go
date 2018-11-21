@@ -41,7 +41,7 @@ func PostLogin(c *gin.Context) {
 //   "200":
 //     description: 测试结果
 func TestSwagOperation(c *gin.Context) {
-	name := c.Param("name")
+	name := c.Query("name")
 	APIResponse(c, true, gin.H{"name": name}, "")
 }
 
@@ -52,22 +52,19 @@ func TestSwagOperation(c *gin.Context) {
 // responses:
 //   200: userResponseWrap
 func TestSwagRoute(c *gin.Context) {
-	value, _ := c.Cookie("robo2025")
-
-	var userId int
-	err := securecookie.DecodeMulti("robo", value, &userId, securecookie.CodecsFromPairs([]byte("secret"))...)
-	if err != nil {
-		fmt.Println(userId)
+	var form forms.LoginForm
+	if !bindAndValidateForm(c, &form) {
+		return
 	}
 
-	c.JSON(200, gin.H{"status": "success"})
+	APIResponse(c, true, gin.H{"username": form.UserName, "password": form.Password}, "")
 }
 
 func Test(c *gin.Context) {
-	value, _ := c.Cookie("robo2025")
+	value, _ := c.Cookie("gosharp")
 
 	var userId int
-	err := securecookie.DecodeMulti("robo", value, &userId, securecookie.CodecsFromPairs([]byte("secret"))...)
+	err := securecookie.DecodeMulti("gosharp", value, &userId, securecookie.CodecsFromPairs([]byte("secret"))...)
 	if err != nil {
 		fmt.Println(userId)
 	}
