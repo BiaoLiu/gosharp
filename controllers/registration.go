@@ -9,6 +9,12 @@ import (
 	"gosharp/services"
 )
 
+// swagger:route POST /login auth wxLoginFormWrap
+// 登录
+//
+// 登录
+// responses:
+//   200: userResponseWrap
 func PostLogin(c *gin.Context) {
 	form := forms.LoginForm{}
 	if err := bindAndValidateForm(c, &form); err != nil {
@@ -47,20 +53,21 @@ func TestSwagOperation(c *gin.Context) {
 	APIResponse(c, true, gin.H{"name": name}, "")
 }
 
-// swagger:route POST /test/swag-route test wxLoginFormWrap
+// swagger:route POST /test/swag-route test swagRouteFormWrap
 // 测试route
 //
 // 测试route
 // responses:
-//   200: userResponseWrap
+//   200: swagRouteResponseWrap
 func TestSwagRoute(c *gin.Context) {
-	var form forms.LoginForm
+	var form forms.SwagRouteForm
 	if err := bindAndValidateForm(c, &form); err != nil {
 		APIResponse(c, false, nil, err.Error())
 		return
 	}
+	result := serializers.SwagRouteResponse{Url: form.Url}
 
-	APIResponse(c, true, gin.H{"username": form.UserName, "password": form.Password}, "")
+	APIResponse(c, true, result, "")
 }
 
 func Test(c *gin.Context) {

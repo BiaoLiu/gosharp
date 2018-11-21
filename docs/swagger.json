@@ -7,6 +7,30 @@
   },
   "host": "localhost:9000",
   "paths": {
+    "/login": {
+      "post": {
+        "description": "登录",
+        "tags": [
+          "auth"
+        ],
+        "summary": "登录",
+        "operationId": "wxLoginFormWrap",
+        "parameters": [
+          {
+            "name": "Body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/LoginForm"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/userResponseWrap"
+          }
+        }
+      }
+    },
     "/test/swag-operation": {
       "get": {
         "description": "测试swagger operation",
@@ -38,19 +62,19 @@
           "test"
         ],
         "summary": "测试route",
-        "operationId": "wxLoginFormWrap",
+        "operationId": "swagRouteFormWrap",
         "parameters": [
           {
             "name": "Body",
             "in": "body",
             "schema": {
-              "$ref": "#/definitions/LoginForm"
+              "$ref": "#/definitions/SwagRouteForm"
             }
           }
         ],
         "responses": {
           "200": {
-            "$ref": "#/responses/userResponseWrap"
+            "$ref": "#/responses/swagRouteResponseWrap"
           }
         }
       }
@@ -77,15 +101,38 @@
       },
       "x-go-package": "gosharp/forms"
     },
+    "SwagRouteForm": {
+      "type": "object",
+      "properties": {
+        "url": {
+          "type": "string",
+          "x-go-name": "Url"
+        }
+      },
+      "x-go-package": "gosharp/forms"
+    },
+    "SwagRouteResponse": {
+      "type": "object",
+      "properties": {
+        "url": {
+          "description": "url路径",
+          "type": "string",
+          "x-go-name": "Url"
+        }
+      },
+      "x-go-package": "gosharp/serializers"
+    },
     "UserResponse": {
       "type": "object",
       "properties": {
         "created_time": {
+          "description": "创建时间",
           "type": "string",
           "format": "date-time",
           "x-go-name": "CreatedTime"
         },
         "email": {
+          "description": "邮箱",
           "type": "string",
           "x-go-name": "Email"
         },
@@ -95,10 +142,12 @@
           "x-go-name": "Id"
         },
         "mobile": {
+          "description": "手机号码",
           "type": "string",
           "x-go-name": "Mobile"
         },
         "username": {
+          "description": "用户名",
           "type": "string",
           "x-go-name": "Username"
         }
@@ -107,6 +156,11 @@
     }
   },
   "responses": {
+    "swagRouteResponseWrap": {
+      "schema": {
+        "$ref": "#/definitions/SwagRouteResponse"
+      }
+    },
     "userResponseWrap": {
       "description": "用户信息",
       "schema": {
