@@ -1,10 +1,7 @@
 package middlewares
 
 import (
-	"fmt"
-	"github.com/gin-contrib/sessions"
 	"github.com/gin-gonic/gin"
-	"gosharp/config"
 )
 
 func Register(engine *gin.Engine) {
@@ -20,15 +17,15 @@ func Register(engine *gin.Engine) {
 	//engine.Use(SessionMiddleware(store))
 }
 
-func sessionStore() sessions.Store {
-	fmt.Println("REDIS_ADDRESS:", config.Viper.GetString("REDIS_ADDRESS"), "REDIS_PASSWORD:", config.Viper.GetString("REDIS_PASSWORD"))
-	store, err := sessions.NewRedisStore(10, "tcp", config.Viper.GetString("REDIS_ADDRESS"), config.Viper.GetString("REDIS_PASSWORD"), []byte("secret"))
-	if err != nil {
-		panic(fmt.Sprintf("session store init error. %s", err.Error()))
-	}
-	store.Options(sessions.Options{
-		Path:   "/",
-		MaxAge: 86400 * 3, //过期时间3天
-	})
-	return store
-}
+//func sessionStore() sessions.Store {
+//	fmt.Println("REDIS_ADDRESS:", config.Viper.GetString("REDIS_ADDRESS"), "REDIS_PASSWORD:", config.Viper.GetString("REDIS_PASSWORD"))
+//	store, err := sessions.NewRedisStore(10, "tcp", config.Viper.GetString("REDIS_ADDRESS"), config.Viper.GetString("REDIS_PASSWORD"), []byte("secret"))
+//	if err != nil {
+//		panic(fmt.Sprintf("session store init error. %s", err.Error()))
+//	}
+//	store.Options(sessions.Options{
+//		Path:   "/",
+//		MaxAge: 86400 * 3, //过期时间3天
+//	})
+//	return store
+//}

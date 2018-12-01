@@ -25,6 +25,6 @@ func Register(router *gin.Engine) {
 	router.GET("/test/swag-operation", controllers.TestSwagOperation)
 	router.POST("/test/swag-route", controllers.TestSwagRoute)
 
-	router.GET("/testconsul", controllers.TestConsul)
+	router.GET("/kong/test", controllers.TestKong)
 
 }

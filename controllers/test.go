@@ -4,5 +4,6 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-func TestConsul(c *gin.Context) {
+func TestKong(c *gin.Context) {
+	APIResponse(c, true, nil, "Kong请求成功")
 }
