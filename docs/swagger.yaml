@@ -1,0 +1,108 @@
+basePath: /v2
+definitions:
+  forms.LoginForm:
+    properties:
+      password:
+        description: |-
+          密码
+          required: true
+        type: string
+      username:
+        description: |-
+          用户名
+          required: true
+        type: string
+    type: object
+  models.AuthUser:
+    properties:
+      dateJoined:
+        type: string
+      email:
+        type: string
+      gender:
+        type: string
+      id:
+        type: integer
+      isActive:
+        type: integer
+      isDeleted:
+        type: integer
+      lastLogin:
+        type: string
+      mobile:
+        type: string
+      password:
+        type: string
+      username:
+        type: string
+    type: object
+  serializers.UserResponse:
+    properties:
+      created_time:
+        description: 创建时间
+        type: string
+      email:
+        description: 邮箱
+        type: string
+      id:
+        type: integer
+      mobile:
+        description: 手机号码
+        type: string
+      username:
+        description: 用户名
+        type: string
+    type: object
+host: petstore.swagger.io
+info:
+  contact:
+    email: support@swagger.io
+    name: API Support
+    url: http://www.swagger.io/support
+  description: This is a sample server Petstore server.
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0.html
+  termsOfService: http://swagger.io/terms/
+  title: Swagger Example API
+  version: "1.0"
+paths:
+  /test/swag-operation:
+    get:
+      parameters:
+      - description: 分页索引
+        in: query
+        name: current
+        required: true
+        type: integer
+      - description: 分页大小
+        in: query
+        name: pageSize
+        required: true
+        type: integer
+      - description: 名称
+        in: query
+        name: name
+        type: string
+      - description: 隐藏菜单(0:不隐藏 1:隐藏)
+        in: query
+        name: hidden
+        type: integer
+      - description: 父级ID
+        in: query
+        name: parent_id
+        type: string
+      - description: body
+        in: body
+        name: body
+        schema:
+          $ref: '#/definitions/forms.LoginForm'
+          type: object
+      responses:
+        "200":
+          description: 分页查询结果
+          schema:
+            $ref: '#/definitions/serializers.UserResponse'
+            type: object
+      summary: 查询分页数据
+swagger: "2.0"

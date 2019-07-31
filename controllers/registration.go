@@ -7,6 +7,7 @@ import (
 	"gosharp/forms"
 	"gosharp/serializers"
 	"gosharp/services"
+	"gosharp/utils/app"
 )
 
 // swagger:route POST /login auth wxLoginFormWrap
@@ -17,8 +18,8 @@ import (
 //   200: userResponseWrap
 func PostLogin(c *gin.Context) {
 	form := forms.LoginForm{}
-	if err := bindAndValidateForm(c, &form); err != nil {
-		APIResponse(c, false, nil, err.Error())
+	if err := app.BindAndValidate(c, &form); err != nil {
+		app.APIResponse(c, false, nil, err.Error())
 		return
 	}
 	token := c.Request.Header["Authorization"]
@@ -26,48 +27,13 @@ func PostLogin(c *gin.Context) {
 
 	//登录
 	if err := services.Login(&form); err != nil {
-		APIResponse(c, false, nil, err.Error())
+		app.APIResponse(c, false, nil, err.Error())
 		return
 	}
 
 	serializer := serializers.UserSerializer{User: form.User}
 
-	APIResponse(c, true, serializer.Response(), "")
-}
-
-// swagger:operation GET /test/swag-operation test 测试swagger-operation
-// ---
-// summary: 测试swagger
-// description: 测试swagger operation
-// parameters:
-// - name: name
-//   in: query
-//   description: 名称
-//   type: string
-//   required: true
-// responses:
-//   "200":
-//     description: 测试结果
-func TestSwagOperation(c *gin.Context) {
-	name := c.Query("name")
-	APIResponse(c, true, gin.H{"name": name}, "")
-}
-
-// swagger:route POST /test/swag-route test swagRouteFormWrap
-// 测试route
-//
-// 测试route
-// responses:
-//   200: swagRouteResponseWrap
-func TestSwagRoute(c *gin.Context) {
-	var form forms.SwagRouteForm
-	if err := bindAndValidateForm(c, &form); err != nil {
-		APIResponse(c, false, nil, err.Error())
-		return
-	}
-	result := serializers.SwagRouteResponse{Url: form.Url}
-
-	APIResponse(c, true, result, "")
+	app.APIResponse(c, true, serializer.Response(), "")
 }
 
 func Test(c *gin.Context) {

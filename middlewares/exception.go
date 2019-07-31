@@ -3,8 +3,8 @@ package middlewares
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
+	rescode "gosharp/utils/def"
 	"gosharp/utils/log"
-	"gosharp/utils/rescode"
 	"net/http"
 )
 

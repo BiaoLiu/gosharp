@@ -1,8 +1,8 @@
 package server
 
 import (
-	"gosharp/config"
-	"gosharp/db"
+	"gosharp/utils/config"
+	"gosharp/utils/db"
 	"gosharp/utils/log"
 	"gosharp/utils/validation"
 )

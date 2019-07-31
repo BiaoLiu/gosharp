@@ -2,6 +2,7 @@ package forms
 
 import (
 	"gosharp/models"
+	"gosharp/utils/app"
 )
 
 // swagger:parameters wxLoginFormWrap
@@ -11,7 +12,7 @@ type wxLoginFormWrap struct {
 }
 
 type LoginForm struct {
-	BaseForm
+	app.BaseForm
 	// 用户名
 	// required: true
 	UserName string `form:"username" json:"username" valid:"Required;MaxSize(50)"`

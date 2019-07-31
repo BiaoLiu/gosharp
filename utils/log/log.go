@@ -6,7 +6,7 @@ import (
 	"github.com/pkg/errors"
 	"github.com/rifflock/lfshook"
 	"github.com/sirupsen/logrus"
-	"gosharp/config"
+	"gosharp/utils/config"
 	"gosharp/utils/file"
 	"path"
 	"time"

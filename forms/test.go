@@ -1,5 +1,7 @@
 package forms
 
+import "gosharp/utils/app"
+
 // swagger:parameters swagRouteFormWrap
 type swagRouteFormWrap struct {
 	//in:body
@@ -7,6 +9,6 @@ type swagRouteFormWrap struct {
 }
 
 type SwagRouteForm struct {
-	BaseForm
+	app.BaseForm
 	Url string `json:"url"`
 }

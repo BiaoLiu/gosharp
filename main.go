@@ -2,7 +2,7 @@
 //
 // gosharp API
 //
-//      Host: localhost:9000
+//      Host: localhost:9000 | api.xxx.com
 //      Version: 1.0.0
 //
 //      Security:
@@ -18,10 +18,10 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
-	"gosharp/config"
 	"gosharp/middlewares"
 	"gosharp/routers"
 	"gosharp/startup"
+	"gosharp/utils/config"
 )
 
 func main() {

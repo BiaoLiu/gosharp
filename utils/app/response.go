@@ -1,42 +1,24 @@
-package controllers
+package app
 
 import (
-	"errors"
 	"fmt"
-	"github.com/astaxie/beego/validation"
 	"github.com/gin-gonic/gin"
-	"github.com/gin-gonic/gin/binding"
-	"gosharp/forms"
-	"gosharp/utils/rescode"
+	"gosharp/utils/auth"
+	rescode "gosharp/utils/def"
 	"net/http"
-	"strings"
+	"strconv"
 )
 
-//表单绑定与表单验证
-func bindAndValidateForm(c *gin.Context, form forms.Form) error {
-	if err := bindForm(c, form); err != nil {
-		return err
-	}
-	if ok, validationErrors := form.IsValid(form); !ok {
-		errorMsg := formatValidationError(validationErrors)
-		return errors.New(errorMsg)
-	}
-	return nil
+func SetTokenHeader(c *gin.Context, userId int, sid string) {
+	//设置header
+	token := auth.GenAccessToken(userId, sid)
+	c.Header("Authorization", token)
 }
 
-//表单绑定
-func bindForm(c *gin.Context, form forms.Form) error {
-	b := binding.Default(c.Request.Method, c.ContentType())
-	if err := c.ShouldBindWith(form, b); err != nil {
-		return errors.New("参数绑定失败:" + err.Error())
-	}
-	return nil
-}
-
-//格式化验证器错误信息
-func formatValidationError(errors []*validation.Error) string {
-	err := errors[0]
-	return fmt.Sprintf("%s:%s", strings.ToLower(err.Field), err.Message)
+func SetPagerHeader(c *gin.Context, offset int, len int, total int) {
+	contentRange := fmt.Sprintf("%d-%d", offset, offset+len)
+	c.Header("X-Content-Range", contentRange)
+	c.Header("X-Content-Total", strconv.Itoa(total))
 }
 
 /**
@@ -47,12 +29,12 @@ func APIResponse(c *gin.Context, success bool, data interface{}, msg string) {
 	if success {
 		resCode = rescode.Success
 		if msg == "" {
-			msg = "操作成功"
+			msg = "success"
 		}
 	} else {
 		resCode = rescode.Error
 		if msg == "" {
-			msg = "操作失败"
+			msg = "error"
 		}
 	}
 	c.JSON(http.StatusOK, gin.H{"rescode": resCode, "data": data, "msg": msg})

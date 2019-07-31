@@ -2,8 +2,8 @@ package services
 
 import (
 	"errors"
-	"gosharp/db"
 	"gosharp/forms"
+	"gosharp/utils/db"
 )
 
 func Login(form *forms.LoginForm) error {

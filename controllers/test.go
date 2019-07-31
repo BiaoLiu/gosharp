@@ -2,8 +2,9 @@ package controllers
 
 import (
 	"github.com/gin-gonic/gin"
+	"gosharp/utils/app"
 )
 
 func TestKong(c *gin.Context) {
-	APIResponse(c, true, nil, "Kong请求成功")
+	app.APIResponse(c, true, nil, "Kong请求成功")
 }
