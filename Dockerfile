@@ -1,17 +1,30 @@
-FROM golang:alpine AS builder
-ADD . /go/src/gosharp
-WORKDIR /go/src/gosharp
-# install git
-RUN apk add --no-cache git bzr
-RUN go get golang.org/x/sys/unix
-RUN go get -u -v github.com/kardianos/govendor && \
-   govendor sync
-RUN GOOS=linux GOARCH=amd64 go build -v -o /go/src/gosharp/robo-server
+FROM golang:1.12 AS builder
+
+ENV GOPROXY https://goproxy.io
+ENV GO111MODULE=on
+
+WORKDIR /app
+
+COPY go.mod .
+COPY go.sum .
+
+RUN go mod download
+
+COPY . .
+
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags="-s -w" -o gosharp
+#RUN GOOS=linux GOARCH=amd64 go build -v -o /app/xchef-dashboard/sso-server
+
 
 FROM alpine
-WORKDIR /root
-RUN apk add -U tzdata && \
-   ln -sf /usr/share/zoneinfo/Asia/Shanghai  /etc/localtime
-COPY --from=builder /go/src/gosharp .
+
+WORKDIR /app
+
+COPY --from=builder /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
+COPY --from=builder /app/gosharp .
+COPY --from=builder /app/config/conf.yaml ./config/conf.yaml
+COPY --from=builder /app/docs/swagger.json ./docs/gosharp.json
+
 #EXPOSE 8080
-CMD [ "./robo-server" ]
+CMD [ "/app/gosharp" ]

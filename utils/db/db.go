@@ -17,6 +17,8 @@ func Init() {
 	}
 	Gorm.LogMode(true)
 	Gorm.SingularTable(true)
+	Gorm.DB().SetMaxIdleConns(10)
+	Gorm.DB().SetMaxOpenConns(100)
 }
 
 func Close() {

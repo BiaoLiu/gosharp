@@ -1,15 +1,9 @@
-package forms
+package user_form
 
 import (
 	"gosharp/models"
 	"gosharp/utils/app"
 )
-
-// swagger:parameters wxLoginFormWrap
-type wxLoginFormWrap struct {
-	// in:body
-	Body LoginForm
-}
 
 type LoginForm struct {
 	app.BaseForm

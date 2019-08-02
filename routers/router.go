@@ -19,10 +19,5 @@ func errorWrapper(handler gin.HandlerFunc) func(c *gin.Context) {
 }
 
 func Register(router *gin.Engine) {
-	router.POST("/login", controllers.PostLogin)
-
-	router.GET("/test", controllers.Test)
-
-	router.GET("/kong/test", controllers.TestKong)
-
+	router.POST("/login", controllers.Login)
 }

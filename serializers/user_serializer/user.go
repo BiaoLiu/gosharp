@@ -1,16 +1,9 @@
-package serializers
+package user_serializer
 
 import (
 	"gosharp/models"
 	"time"
 )
-
-// 用户信息
-// swagger:response userResponseWrap
-type userResponseWrap struct {
-	// in:body
-	Body UserResponse
-}
 
 type UserResponse struct {
 	Id int `json:"id"`
