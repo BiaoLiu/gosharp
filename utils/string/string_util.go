@@ -23,12 +23,15 @@ func SafeInt(value string, defaultValue int) int {
 }
 
 func CastEndTime(endTimeValue string) string {
-	endTime, err := time.Parse(DATE_FORMAT, endTimeValue)
-	if err != nil {
-		panic("时间类型格式错误:" + err.Error())
+	if endTimeValue != "" {
+		endTime, err := time.Parse(DATE_FORMAT, endTimeValue)
+		if err != nil {
+			panic("时间类型格式错误:" + err.Error())
+		}
+		endTime = endTime.AddDate(0, 0, 1)
+		return endTime.Format(DATE_FORMAT)
 	}
-	endTime = endTime.AddDate(0, 0, 1)
-	return endTime.Format(DATE_FORMAT)
+	return endTimeValue
 }
 
 func FormatUrl(value string) string {

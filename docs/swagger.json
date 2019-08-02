@@ -7,14 +7,171 @@
   },
   "host": "localhost:9000",
   "paths": {
+    "/articles": {
+      "get": {
+        "description": "文章列表",
+        "tags": [
+          "Article"
+        ],
+        "summary": "文章列表",
+        "operationId": "文章列表",
+        "parameters": [
+          {
+            "type": "string",
+            "description": "标题",
+            "name": "title",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "创建开始时间 如：2018-12-05",
+            "name": "created_start",
+            "in": "query"
+          },
+          {
+            "type": "string",
+            "description": "创建结束时间 如：2018-12-05",
+            "name": "created_end",
+            "in": "query"
+          },
+          {
+            "type": "number",
+            "name": "offset",
+            "in": "query"
+          },
+          {
+            "type": "number",
+            "name": "limit",
+            "in": "query"
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/ArticleResponseWrap"
+          }
+        }
+      },
+      "post": {
+        "description": "新增文章",
+        "tags": [
+          "Article"
+        ],
+        "summary": "新增文章",
+        "operationId": "新增文章",
+        "parameters": [
+          {
+            "name": "Body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/ArticleForm"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": ""
+          }
+        }
+      },
+      "delete": {
+        "description": "删除文章",
+        "tags": [
+          "Article"
+        ],
+        "summary": "删除文章",
+        "operationId": "删除文章",
+        "parameters": [
+          {
+            "name": "Body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/IdsForm"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": ""
+          }
+        }
+      }
+    },
+    "/articles/all": {
+      "get": {
+        "description": "所有文章列表",
+        "tags": [
+          "Article"
+        ],
+        "summary": "所有文章列表",
+        "operationId": "所有文章列表",
+        "responses": {
+          "200": {
+            "$ref": "#/responses/ArticleResponseWrap"
+          }
+        }
+      }
+    },
+    "/articles/{id}": {
+      "get": {
+        "description": "文章详情",
+        "tags": [
+          "Article"
+        ],
+        "summary": "文章详情",
+        "operationId": "文章详情",
+        "parameters": [
+          {
+            "type": "number",
+            "description": "文章ID",
+            "name": "id",
+            "in": "path",
+            "required": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": "#/responses/ArticleResponseWrap"
+          }
+        }
+      },
+      "put": {
+        "description": "修改文章",
+        "tags": [
+          "Article"
+        ],
+        "summary": "修改文章",
+        "operationId": "修改文章",
+        "parameters": [
+          {
+            "type": "number",
+            "description": "文章ID",
+            "name": "id",
+            "in": "path",
+            "required": true
+          },
+          {
+            "name": "Body",
+            "in": "body",
+            "schema": {
+              "$ref": "#/definitions/ArticleForm"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "$ref": ""
+          }
+        }
+      }
+    },
     "/login": {
       "post": {
         "description": "登录",
         "tags": [
-          "auth"
+          "User"
         ],
         "summary": "登录",
-        "operationId": "wxLoginFormWrap",
+        "operationId": "用户",
         "parameters": [
           {
             "name": "Body",
@@ -30,57 +187,94 @@
           }
         }
       }
-    },
-    "/test/swag-operation": {
-      "get": {
-        "description": "测试swagger operation",
-        "tags": [
-          "test"
-        ],
-        "summary": "测试swagger",
-        "operationId": "测试swagger-operation",
-        "parameters": [
-          {
-            "type": "string",
-            "description": "名称",
-            "name": "name",
-            "in": "query",
-            "required": true
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "测试结果"
-          }
-        }
-      }
-    },
-    "/test/swag-route": {
-      "post": {
-        "description": "测试route",
-        "tags": [
-          "test"
-        ],
-        "summary": "测试route",
-        "operationId": "swagRouteFormWrap",
-        "parameters": [
-          {
-            "name": "Body",
-            "in": "body",
-            "schema": {
-              "$ref": "#/definitions/SwagRouteForm"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "$ref": "#/responses/swagRouteResponseWrap"
-          }
-        }
-      }
     }
   },
   "definitions": {
+    "ArticleForm": {
+      "type": "object",
+      "required": [
+        "title",
+        "image_url",
+        "content",
+        "sort"
+      ],
+      "properties": {
+        "content": {
+          "description": "内容",
+          "type": "string",
+          "x-go-name": "Content"
+        },
+        "image_url": {
+          "description": "主图url",
+          "type": "string",
+          "x-go-name": "ImageUrl"
+        },
+        "sort": {
+          "description": "排序号",
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "Sort"
+        },
+        "title": {
+          "description": "标题",
+          "type": "string",
+          "x-go-name": "Title"
+        }
+      },
+      "x-go-package": "gosharp/forms/article_form"
+    },
+    "ArticleResponse": {
+      "type": "object",
+      "properties": {
+        "content": {
+          "description": "内容",
+          "type": "string",
+          "x-go-name": "Content"
+        },
+        "created_at": {
+          "description": "创建时间",
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "CreatedAt"
+        },
+        "id": {
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "Id"
+        },
+        "image_url": {
+          "description": "主图",
+          "type": "string",
+          "x-go-name": "ImageUrl"
+        },
+        "sort": {
+          "description": "排序号",
+          "type": "integer",
+          "format": "int64",
+          "x-go-name": "Sort"
+        },
+        "title": {
+          "description": "标题",
+          "type": "string",
+          "x-go-name": "Title"
+        }
+      },
+      "x-go-package": "gosharp/serializers/article_serializer"
+    },
+    "IdsForm": {
+      "type": "object",
+      "properties": {
+        "ids": {
+          "type": "array",
+          "items": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "x-go-name": "Ids"
+        }
+      },
+      "x-go-package": "gosharp/forms/article_form"
+    },
     "LoginForm": {
       "type": "object",
       "required": [
@@ -99,17 +293,7 @@
           "x-go-name": "UserName"
         }
       },
-      "x-go-package": "gosharp/forms"
-    },
-    "SwagRouteForm": {
-      "type": "object",
-      "properties": {
-        "url": {
-          "type": "string",
-          "x-go-name": "Url"
-        }
-      },
-      "x-go-package": "gosharp/forms"
+      "x-go-package": "gosharp/forms/user_form"
     },
     "SwagRouteResponse": {
       "type": "object",
@@ -152,17 +336,21 @@
           "x-go-name": "Username"
         }
       },
-      "x-go-package": "gosharp/serializers"
+      "x-go-package": "gosharp/serializers/user_serializer"
     }
   },
   "responses": {
+    "articleResponseWrap": {
+      "schema": {
+        "$ref": "#/definitions/ArticleResponse"
+      }
+    },
     "swagRouteResponseWrap": {
       "schema": {
         "$ref": "#/definitions/SwagRouteResponse"
       }
     },
     "userResponseWrap": {
-      "description": "用户信息",
       "schema": {
         "$ref": "#/definitions/UserResponse"
       }

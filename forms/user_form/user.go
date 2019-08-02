@@ -7,6 +7,7 @@ import (
 
 type LoginForm struct {
 	app.BaseForm
+
 	// 用户名
 	// required: true
 	UserName string `form:"username" json:"username" valid:"Required;MaxSize(50)"`

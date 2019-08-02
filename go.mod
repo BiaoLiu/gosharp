@@ -3,8 +3,8 @@ module gosharp
 go 1.12
 
 require (
-	github.com/astaxie/beego v1.12.0
-	github.com/bitly/go-simplejson v0.5.0 // indirect
+	github.com/alecthomas/template v0.0.0-20160405071501-a0175ee3bccc
+	github.com/bitly/go-simplejson v0.5.0
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
 	github.com/gin-gonic/gin v1.4.0
 	github.com/gorilla/securecookie v1.1.1
@@ -15,6 +15,7 @@ require (
 	github.com/rifflock/lfshook v0.0.0-20180920164130-b9218ef580f5
 	github.com/sirupsen/logrus v1.4.2
 	github.com/spf13/viper v1.4.0
+	github.com/swaggo/swag v1.6.2
 	golang.org/x/crypto v0.0.0-20190325154230-a5d413f7728c
-	gopkg.in/redis.v5 v5.2.9 // indirect
+	gopkg.in/redis.v5 v5.2.9
 )

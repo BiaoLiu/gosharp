@@ -16,7 +16,7 @@ import (
 // - name: Body
 //   in: body
 //   schema:
-//       "$ref": "#/definitions/loginForm"
+//       "$ref": "#/definitions/LoginForm"
 // responses:
 //     "200":
 //       "$ref": "#/responses/userResponseWrap"

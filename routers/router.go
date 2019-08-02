@@ -20,4 +20,17 @@ func errorWrapper(handler gin.HandlerFunc) func(c *gin.Context) {
 
 func Register(router *gin.Engine) {
 	router.POST("/login", controllers.Login)
+
+	router.POST("/articles", controllers.ArticleCreate)
+	router.PUT("/articles/:id", controllers.ArticleUpdate)
+	router.GET("/articles", controllers.ArticleList)
+	router.DELETE("/articles", controllers.ArticleDelete)
+	router.GET("/articles/:id", func(c *gin.Context) {
+		path1 := c.Param("id")
+		if path1 == "all" {
+			controllers.ArticleAllList(c)
+		} else {
+			controllers.ArticleRetrieve(c)
+		}
+	})
 }
