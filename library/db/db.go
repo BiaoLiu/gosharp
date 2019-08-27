@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"github.com/jinzhu/gorm"
 	_ "github.com/jinzhu/gorm/dialects/mysql"
-	"gosharp/utils/config"
+	"gosharp/library/config"
 )
 
 var Gorm *gorm.DB

@@ -2,8 +2,8 @@ package http
 
 import (
 	"github.com/stretchr/testify/assert"
-	"gosharp/utils/config"
-	"gosharp/utils/log"
+	"gosharp/library/config"
+	"gosharp/library/log"
 	"testing"
 )
 

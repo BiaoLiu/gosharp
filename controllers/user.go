@@ -3,9 +3,9 @@ package controllers
 import (
 	"github.com/gin-gonic/gin"
 	"gosharp/forms/user_form"
+	"gosharp/library/app"
 	"gosharp/serializers/user_serializer"
 	"gosharp/services/user_service"
-	"gosharp/utils/app"
 )
 
 // swagger:operation POST /login User 用户

@@ -1,7 +1,7 @@
 package string_util
 
 import (
-	"gosharp/utils/config"
+	"gosharp/library/config"
 	"net/url"
 	"reflect"
 	"strconv"

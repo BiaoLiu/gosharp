@@ -6,8 +6,8 @@ import (
 	"github.com/pkg/errors"
 	"github.com/rifflock/lfshook"
 	"github.com/sirupsen/logrus"
-	"gosharp/utils/config"
-	"gosharp/utils/file"
+	"gosharp/library/config"
+	"gosharp/library/file"
 	"path"
 	"time"
 )

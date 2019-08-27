@@ -6,7 +6,7 @@ import (
 	"errors"
 	jwt_lib "github.com/dgrijalva/jwt-go"
 	"golang.org/x/crypto/pbkdf2"
-	"gosharp/utils/encrypt"
+	"gosharp/library/encrypt"
 	"strconv"
 	"strings"
 	"time"

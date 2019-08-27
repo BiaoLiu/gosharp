@@ -3,10 +3,10 @@ package controllers
 import (
 	"github.com/gin-gonic/gin"
 	"gosharp/forms/article_form"
+	"gosharp/library/app"
+	string_util "gosharp/library/string"
 	"gosharp/serializers/article_serializer"
 	"gosharp/services/article_service"
-	"gosharp/utils/app"
-	string_util "gosharp/utils/string"
 )
 
 // swagger:operation GET /articles Article 文章列表
@@ -45,10 +45,10 @@ func ArticleList(c *gin.Context) {
 
 	articles, total := article_service.GetArticleList(title, createdStart, createdEnd, offset, limit)
 
-	serializer := article_serializer.ArticlesSerializer{articles}
+	serializer := article_serializer.ArticleSerializer{Articles: articles}
 	//设置header
 	app.SetPagerHeader(c, offset, limit, int(total))
-	app.APIResponse(c, true, serializer.Response(), "")
+	app.APIResponse(c, true, serializer.ListResponse(), "")
 
 }
 
@@ -62,9 +62,9 @@ func ArticleList(c *gin.Context) {
 func ArticleAllList(c *gin.Context) {
 	articles := article_service.GetAllArticleList()
 
-	serializer := article_serializer.ArticlesSerializer{articles}
+	serializer := article_serializer.ArticleSerializer{Articles: articles}
 
-	app.APIResponse(c, true, serializer.Response(), "")
+	app.APIResponse(c, true, serializer.ListResponse(), "")
 }
 
 // swagger:operation GET /articles/{id} Article 文章详情
@@ -89,9 +89,9 @@ func ArticleRetrieve(c *gin.Context) {
 		return
 	}
 
-	serializer := article_serializer.ArticleSerializer{article}
+	serializer := article_serializer.ArticleSerializer{Article: article}
 
-	app.APIResponse(c, true, serializer.Response(), "")
+	app.APIResponse(c, true, serializer.SingleResponse(), "")
 }
 
 // swagger:operation POST /articles Article 新增文章

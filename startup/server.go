@@ -1,10 +1,10 @@
 package server
 
 import (
-	"gosharp/utils/config"
-	"gosharp/utils/db"
-	"gosharp/utils/log"
-	"gosharp/utils/validation"
+	"gosharp/library/config"
+	"gosharp/library/db"
+	"gosharp/library/log"
+	"gosharp/library/validation"
 )
 
 func Init(configPath string, logPath string) {

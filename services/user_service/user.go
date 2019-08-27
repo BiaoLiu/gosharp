@@ -3,8 +3,8 @@ package user_service
 import (
 	"errors"
 	"gosharp/forms/user_form"
+	"gosharp/library/db"
 	"gosharp/models"
-	"gosharp/utils/db"
 )
 
 func Login(form *user_form.LoginForm) error {

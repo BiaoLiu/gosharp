@@ -5,4 +5,3 @@ type loginFormWrap struct {
 	// in:body
 	Body LoginForm
 }
-

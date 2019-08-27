@@ -1,8 +1,10 @@
 package article_serializer
 
 import (
+	"fmt"
+	"gopkg.in/jeevatkm/go-model.v1"
+	string_util "gosharp/library/string"
 	"gosharp/models"
-	string_util "gosharp/utils/string"
 )
 
 type ArticleResponse struct {
@@ -20,35 +22,28 @@ type ArticleResponse struct {
 }
 
 type ArticleSerializer struct {
-	*models.Article
+	Article  *models.Article
+	Articles []*models.Article
 }
 
-func (s ArticleSerializer) Response() ArticleResponse {
-	return ArticleResponse{
-		Id:        s.Id,
-		Title:     s.Title,
-		ImageUrl:  string_util.FormatUrl(s.ImageUrl),
-		Content:   s.Content,
-		Sort:      s.Sort,
-		CreatedAt: s.CreatedAt.Unix(),
+func (s *ArticleSerializer) SingleResponse() *ArticleResponse {
+	response := &ArticleResponse{}
+	err := model.Copy(response, s.Article)
+	fmt.Println(err)
+	response.ImageUrl = string_util.FormatUrl(s.Article.ImageUrl)
+	response.CreatedAt = s.Article.CreatedAt.Unix()
+	return response
+}
+
+func (s *ArticleSerializer) ListResponse() []*ArticleResponse {
+	var response []*ArticleResponse
+	if s.Articles == nil {
+		return make([]*ArticleResponse, 0)
 	}
-}
-
-type ArticlesSerializer struct {
-	Articles []models.Article
-}
-
-func (s ArticlesSerializer) Response() []ArticleResponse {
-	var response []ArticleResponse
-
-	if s.Articles == nil || len(s.Articles) == 0 {
-		return make([]ArticleResponse, 0)
-	}
-
-	for i, _ := range s.Articles {
-		restaurant := &s.Articles[i]
-		serializer := ArticleSerializer{restaurant}
-		response = append(response, serializer.Response())
+	for i := range s.Articles {
+		item := s.Articles[i]
+		serializer := ArticleSerializer{Article: item}
+		response = append(response, serializer.SingleResponse())
 	}
 	return response
 }

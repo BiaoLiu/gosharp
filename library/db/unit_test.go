@@ -2,7 +2,7 @@ package db
 
 import (
 	"github.com/stretchr/testify/assert"
-	"gosharp/utils/config"
+	"gosharp/library/config"
 	"testing"
 )
 

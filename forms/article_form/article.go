@@ -1,8 +1,8 @@
 package article_form
 
 import (
+	"gosharp/library/app"
 	"gosharp/models"
-	"gosharp/utils/app"
 )
 
 type ArticleForm struct {

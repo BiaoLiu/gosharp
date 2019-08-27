@@ -3,8 +3,8 @@ package app
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
-	"gosharp/utils/auth"
-	rescode "gosharp/utils/def"
+	"gosharp/library/auth"
+	rescode "gosharp/library/def"
 	"net/http"
 	"strconv"
 )

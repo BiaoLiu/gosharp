@@ -3,7 +3,7 @@ package http
 import (
 	"crypto/tls"
 	"github.com/bitly/go-simplejson"
-	"gosharp/utils/log"
+	"gosharp/library/log"
 	"io"
 	"io/ioutil"
 	"net/http"

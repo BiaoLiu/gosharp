@@ -2,7 +2,7 @@ package controllers
 
 import (
 	"github.com/gin-gonic/gin"
-	"gosharp/utils/app"
+	"gosharp/library/app"
 )
 
 func TestKong(c *gin.Context) {

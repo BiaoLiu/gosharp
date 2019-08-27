@@ -17,5 +17,6 @@ require (
 	github.com/spf13/viper v1.4.0
 	github.com/swaggo/swag v1.6.2
 	golang.org/x/crypto v0.0.0-20190325154230-a5d413f7728c
+	gopkg.in/jeevatkm/go-model.v1 v1.1.0
 	gopkg.in/redis.v5 v5.2.9
 )

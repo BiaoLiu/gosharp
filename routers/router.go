@@ -3,7 +3,7 @@ package routers
 import (
 	"github.com/gin-gonic/gin"
 	"gosharp/controllers"
-	rescode "gosharp/utils/def"
+	rescode "gosharp/library/def"
 	"net/http"
 )
 

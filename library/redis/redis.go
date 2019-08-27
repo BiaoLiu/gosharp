@@ -3,7 +3,7 @@ package redis
 import (
 	"fmt"
 	"gopkg.in/redis.v5"
-	"gosharp/utils/config"
+	"gosharp/library/config"
 )
 
 var Client *redis.Client

@@ -18,10 +18,10 @@ package main
 
 import (
 	"github.com/gin-gonic/gin"
+	"gosharp/library/config"
 	"gosharp/middlewares"
 	"gosharp/routers"
 	"gosharp/startup"
-	"gosharp/utils/config"
 )
 
 func main() {
