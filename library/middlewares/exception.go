@@ -4,7 +4,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/gin-gonic/gin"
-	rescode "gosharp/library/def"
+	"gosharp/library/def"
 	"gosharp/library/log"
 	"net/http"
 )

@@ -19,7 +19,7 @@ package main
 import (
 	"github.com/gin-gonic/gin"
 	"gosharp/library/config"
-	"gosharp/middlewares"
+	"gosharp/library/middlewares"
 	"gosharp/routers"
 	"gosharp/startup"
 )
