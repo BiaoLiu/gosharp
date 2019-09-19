@@ -3,9 +3,9 @@ package article_service
 import (
 	"fmt"
 	"gosharp/forms/article_form"
-	"gosharp/library/db"
+	"gosharp/library/database/mysql"
 	"gosharp/library/log"
-	string_util "gosharp/library/string"
+	"gosharp/library/type"
 	"gosharp/models"
 )
 
@@ -14,7 +14,7 @@ func GetArticleList(title, createdStart, createdEnd string, offset, limit int) (
 	//查询条件
 	query = db.WhereIgnoreBlank(query, "title = ? ", title)
 	query = db.WhereIgnoreBlank(query, "created_at >= ? ", createdStart)
-	query = db.WhereIgnoreBlank(query, "created_at < ? ", string_util.CastEndTime(createdEnd))
+	query = db.WhereIgnoreBlank(query, "created_at < ? ", utils.CastEndTime(createdEnd))
 
 	var articles []*models.Article
 	total, _ := db.PaginateWithCount(query, "sort, created_at desc", offset, limit, &articles)
@@ -36,7 +36,7 @@ func GetArticleById(ArticleId int) *models.Article {
 func CreateArticle(form *article_form.ArticleForm) (*models.Article, error) {
 	article := &models.Article{
 		Title:    form.Title,
-		ImageUrl: string_util.ParseUrl(form.ImageUrl),
+		ImageUrl: utils.ParseUrl(form.ImageUrl),
 		Content:  form.Content,
 		Sort:     form.Sort,
 	}
@@ -49,9 +49,9 @@ func CreateArticle(form *article_form.ArticleForm) (*models.Article, error) {
 }
 
 func UpdateArticle(form *article_form.ArticleForm) error {
-	form.ImageUrl = string_util.ParseUrl(form.ImageUrl)
+	form.ImageUrl = utils.ParseUrl(form.ImageUrl)
 
-	attrs := string_util.Struct2Map(*form)
+	attrs := utils.Struct2Map(*form)
 	if err := db.Gorm.Model(&models.Article{}).Update(attrs).Error; err != nil {
 		log.Logger.Error(fmt.Sprintf("UpdateArticle error: %s", err))
 		return err

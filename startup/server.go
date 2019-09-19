@@ -2,9 +2,9 @@ package server
 
 import (
 	"gosharp/library/config"
-	"gosharp/library/db"
+	db "gosharp/library/database/mysql"
 	"gosharp/library/log"
-	"gosharp/library/validation"
+	"gosharp/library/pkg/validation"
 )
 
 func Init(configPath string, logPath string) {

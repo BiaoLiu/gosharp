@@ -5,6 +5,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"gosharp/library/auth"
 	rescode "gosharp/library/def"
+	e "gosharp/library/error"
 	"net/http"
 	"strconv"
 )
@@ -41,8 +42,16 @@ func APIResponse(c *gin.Context, success bool, data interface{}, msg string) {
 }
 
 //自定义错误码
-func APIResponseError(c *gin.Context, rescode string, data interface{}, msg string) {
-	c.JSON(http.StatusOK, gin.H{"rescode": rescode, "data": data, "msg": msg})
+func APIResponseError(c *gin.Context, data interface{}, err error) {
+	if apiErr, ok := err.(e.APIError); ok {
+		c.JSON(http.StatusOK, gin.H{"rescode": apiErr.Code, "data": data, "msg": apiErr.Error()})
+	}
+	c.JSON(http.StatusOK, gin.H{"rescode": rescode.Error, "data": data, "msg": err.Error()})
+}
+
+//自由模式 所有参数自定义
+func APIResponseFree(c *gin.Context, httpCode int, resCode string, data interface{}, msg string) {
+	c.JSON(httpCode, gin.H{"rescode": resCode, "data": data, "msg": msg})
 }
 
 //400

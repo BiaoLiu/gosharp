@@ -1,7 +1,8 @@
-package string_util
+package utils
 
 import (
 	"gosharp/library/config"
+	"gosharp/library/pkg/snowflake"
 	"net/url"
 	"reflect"
 	"strconv"
@@ -26,12 +27,13 @@ func CastEndTime(endTimeValue string) string {
 	if endTimeValue != "" {
 		endTime, err := time.Parse(DATE_FORMAT, endTimeValue)
 		if err != nil {
-			panic("时间类型格式错误:" + err.Error())
+			panic("time value error:" + err.Error())
 		}
 		endTime = endTime.AddDate(0, 0, 1)
 		return endTime.Format(DATE_FORMAT)
 	}
 	return endTimeValue
+
 }
 
 func FormatUrl(value string) string {
@@ -48,17 +50,6 @@ func ParseUrl(rawUrl string) string {
 	return ""
 }
 
-func CastMap(m map[interface{}]interface{}) map[string]interface{} {
-	m2 := make(map[string]interface{})
-	for key, value := range m {
-		switch key := key.(type) {
-		case string:
-			m2[key] = value
-		}
-	}
-	return m2
-}
-
 func Struct2Map(obj interface{}) map[string]interface{} {
 	t := reflect.TypeOf(obj)
 	v := reflect.ValueOf(obj)
@@ -68,4 +59,32 @@ func Struct2Map(obj interface{}) map[string]interface{} {
 		data[t.Field(i).Name] = v.Field(i).Interface()
 	}
 	return data
+}
+
+func FormatTime(val interface{}) string {
+	switch t := val.(type) {
+	case *time.Time:
+		if t == nil {
+			return ""
+		}
+		return t.Format(TIME_FORMAT)
+	case time.Time:
+		return t.Format(TIME_FORMAT)
+	default:
+		return ""
+	}
+}
+
+func GenerateId() int64 {
+	node, _ := snowflake.NewNode(0)
+	snowId := node.Generate()
+	return snowId.Int64()
+}
+
+func ConvertInt64ToString(value int64) string {
+	return strconv.FormatInt(value, 10)
+}
+
+func ConvertFloatToString(value float64) string {
+	return strconv.FormatFloat(value, 'E', -1, 64)
 }

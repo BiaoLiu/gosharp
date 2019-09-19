@@ -3,7 +3,7 @@ package user_service
 import (
 	"errors"
 	"gosharp/forms/user_form"
-	"gosharp/library/db"
+	"gosharp/library/database/mysql"
 	"gosharp/models"
 )
 

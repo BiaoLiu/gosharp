@@ -4,7 +4,7 @@ import (
 	"github.com/gin-gonic/gin"
 	"gosharp/forms/article_form"
 	"gosharp/library/app"
-	string_util "gosharp/library/string"
+	"gosharp/library/type"
 	"gosharp/serializers/article_serializer"
 	"gosharp/services/article_service"
 )
@@ -40,16 +40,15 @@ func ArticleList(c *gin.Context) {
 	createdStart := c.Query("created_start")
 	createdEnd := c.Query("created_end")
 
-	offset := string_util.SafeInt(c.Query("offset"), 0)
-	limit := string_util.SafeInt(c.Query("limit"), 15)
+	offset := utils.SafeInt(c.Query("offset"), 0)
+	limit := utils.SafeInt(c.Query("limit"), 15)
 
 	articles, total := article_service.GetArticleList(title, createdStart, createdEnd, offset, limit)
 
-	serializer := article_serializer.ArticleSerializer{Articles: articles}
+	serializer := article_serializer.ArticleSerializer{Models: articles}
 	//设置header
 	app.SetPagerHeader(c, offset, limit, int(total))
 	app.APIResponse(c, true, serializer.ListResponse(), "")
-
 }
 
 // swagger:operation GET /articles/all Article 所有文章列表
@@ -62,7 +61,7 @@ func ArticleList(c *gin.Context) {
 func ArticleAllList(c *gin.Context) {
 	articles := article_service.GetAllArticleList()
 
-	serializer := article_serializer.ArticleSerializer{Articles: articles}
+	serializer := article_serializer.ArticleSerializer{Models: articles}
 
 	app.APIResponse(c, true, serializer.ListResponse(), "")
 }
@@ -81,7 +80,7 @@ func ArticleAllList(c *gin.Context) {
 //     "200":
 //       "$ref": "#/responses/ArticleResponseWrap"
 func ArticleRetrieve(c *gin.Context) {
-	id := string_util.SafeInt(c.Param("id"), 0)
+	id := utils.SafeInt(c.Param("id"), 0)
 
 	article := article_service.GetArticleById(id)
 	if article == nil {
@@ -89,7 +88,7 @@ func ArticleRetrieve(c *gin.Context) {
 		return
 	}
 
-	serializer := article_serializer.ArticleSerializer{Article: article}
+	serializer := article_serializer.ArticleSerializer{Model: article}
 
 	app.APIResponse(c, true, serializer.SingleResponse(), "")
 }
@@ -139,7 +138,7 @@ func ArticleCreate(c *gin.Context) {
 //   "200":
 //       "$ref": ""
 func ArticleUpdate(c *gin.Context) {
-	id := string_util.SafeInt(c.Param("id"), 0)
+	id := utils.SafeInt(c.Param("id"), 0)
 
 	var form article_form.ArticleForm
 	if err := app.BindAndValidate(c, &form); err != nil {

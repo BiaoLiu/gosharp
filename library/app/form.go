@@ -5,7 +5,7 @@ import (
 	"fmt"
 	"github.com/gin-gonic/gin"
 	"github.com/gin-gonic/gin/binding"
-	"gosharp/library/validation"
+	"gosharp/library/pkg/validation"
 	"strings"
 )
 

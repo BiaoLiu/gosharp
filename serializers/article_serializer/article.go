@@ -3,7 +3,7 @@ package article_serializer
 import (
 	"fmt"
 	"gopkg.in/jeevatkm/go-model.v1"
-	string_util "gosharp/library/string"
+	"gosharp/library/type"
 	"gosharp/models"
 )
 
@@ -22,27 +22,27 @@ type ArticleResponse struct {
 }
 
 type ArticleSerializer struct {
-	Article  *models.Article
-	Articles []*models.Article
+	Model  *models.Article
+	Models []*models.Article
 }
 
 func (s *ArticleSerializer) SingleResponse() *ArticleResponse {
 	response := &ArticleResponse{}
-	err := model.Copy(response, s.Article)
+	err := model.Copy(response, s.Model)
 	fmt.Println(err)
-	response.ImageUrl = string_util.FormatUrl(s.Article.ImageUrl)
-	response.CreatedAt = s.Article.CreatedAt.Unix()
+	response.ImageUrl = utils.FormatUrl(s.Model.ImageUrl)
+	response.CreatedAt = s.Model.CreatedAt.Unix()
 	return response
 }
 
 func (s *ArticleSerializer) ListResponse() []*ArticleResponse {
 	var response []*ArticleResponse
-	if s.Articles == nil {
+	if len(s.Models) == 0 {
 		return make([]*ArticleResponse, 0)
 	}
-	for i := range s.Articles {
-		item := s.Articles[i]
-		serializer := ArticleSerializer{Article: item}
+	for i := range s.Models {
+		item := s.Models[i]
+		serializer := ArticleSerializer{Model: item}
 		response = append(response, serializer.SingleResponse())
 	}
 	return response

@@ -35,7 +35,7 @@ func Login(c *gin.Context) {
 
 	//todo 保存登录信息
 
-	serializer := user_serializer.UserSerializer{User: form.User}
+	serializer := user_serializer.UserSerializer{Model: form.User}
 
-	app.APIResponse(c, true, serializer.Response(), "")
+	app.APIResponse(c, true, serializer.SingleResponse(), "")
 }

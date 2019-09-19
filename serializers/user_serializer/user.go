@@ -18,15 +18,15 @@ type UserResponse struct {
 }
 
 type UserSerializer struct {
-	User *models.AuthUser
+	Model *models.AuthUser
 }
 
-func (s *UserSerializer) Response() UserResponse {
+func (s *UserSerializer) SingleResponse() UserResponse {
 	return UserResponse{
-		Id:          s.User.ID,
-		Username:    s.User.Username,
-		Mobile:      s.User.Mobile,
-		Email:       s.User.Email.String,
-		CreatedTime: s.User.DateJoined,
+		Id:          s.Model.ID,
+		Username:    s.Model.Username,
+		Mobile:      s.Model.Mobile,
+		Email:       s.Model.Email.String,
+		CreatedTime: s.Model.DateJoined,
 	}
 }
