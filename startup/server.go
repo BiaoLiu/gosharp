@@ -2,7 +2,7 @@ package server
 
 import (
 	"gosharp/library/config"
-	db "gosharp/library/database/mysql"
+	"gosharp/library/database/mysql"
 	"gosharp/library/log"
 	"gosharp/library/pkg/validation"
 )
