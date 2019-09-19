@@ -3,61 +3,62 @@ package auth
 import (
 	"crypto/sha256"
 	"encoding/base64"
-	"errors"
-	jwt_lib "github.com/dgrijalva/jwt-go"
+	"encoding/json"
+	"github.com/gin-gonic/gin"
 	"golang.org/x/crypto/pbkdf2"
+	"gosharp/library/cache/redis"
+	cookie_util "gosharp/library/cookie"
 	"gosharp/library/encrypt"
+	e "gosharp/library/error"
 	"strconv"
 	"strings"
 	"time"
 )
 
 const (
-	JwtSecret    = "mysupersecretpassword"
-	SessionStore = "session_store"
-	AuthUser     = "user"
+	JwtSecret        = "mysupersecretpassword"
+	SessionKeyApp    = "session:app"
+	SessionKeyManage = "session:manage"
+	AuthUser         = "user"
+	ManageUser       = "manage_user"
 )
 
-type JwtToken struct {
-	Uid int    `json:"uid"`
-	Sid string `json:"sid"`
-	Iat int64  `json:"iat"`
-}
-
-//生成access_token
-func GenAccessToken(userId int, sid string) string {
-	token := jwt_lib.New(jwt_lib.GetSigningMethod("HS256"))
-	// Set some claims
-	token.Claims = jwt_lib.MapClaims{
-		"uid": userId,
-		"sid": sid,
-		"iat": time.Now().Unix(),
-		//"exp": time.Now().Add(time.Hour * 1).Unix(),
+func SaveLoginSession(sessionKey string, uid int, v interface{}) (string, error) {
+	userDict, _ := json.Marshal(v)
+	//生成会话id
+	sid, _ := cookie_util.Encode(uid)
+	//用户信息存入redis
+	d, _ := time.ParseDuration(cookie_util.CookieExpiration)
+	strDict := string(userDict)
+	if err := redis.Client.Set(sessionKey+":"+strconv.Itoa(uid)+":"+sid, strDict, d).Err(); err != nil {
+		return "", err
 	}
-	// Sign and get the complete encoded token as a string
-	tokenString, _ := token.SignedString([]byte(JwtSecret))
-	return tokenString
+	if err := redis.Client.Save().Err(); err != nil {
+		return "", err
+	}
+	return sid, nil
 }
 
-func ParseAccessToken(rawAccessToken string) (*JwtToken, error) {
-	token, err := jwt_lib.Parse(rawAccessToken, func(token *jwt_lib.Token) (interface{}, error) {
-		b := []byte(JwtSecret)
-		return b, nil
-	})
+// 从接口请求token中获取登录用户
+func GetLoginSession(c *gin.Context, sessionKey string, v interface{}) error {
+	rawAccessToken := c.Request.Header["Authorization"]
+	if len(rawAccessToken) == 0 {
+		return e.APIError{}
+	}
+	var jwtToken *JwtToken
+	var err error
+	if jwtToken, err = ParseAccessToken(rawAccessToken[0]); err != nil {
+		return e.APIError{}
+	}
+	userDict := redis.Client.Get(sessionKey + ":" + strconv.Itoa(jwtToken.Uid) + ":" + jwtToken.Sid).Val()
+	if len(userDict) == 0 {
+		return e.APIError{}
+	}
+	err = json.Unmarshal([]byte(userDict), v)
 	if err != nil {
-		return nil, errors.New("非法的token")
+		return e.APIError{}
 	}
-	claims, ok := token.Claims.(jwt_lib.MapClaims)
-	if !(ok && token.Valid) {
-		return nil, errors.New("非法的token")
-	}
-
-	jwtToken := &JwtToken{
-		Uid: int(claims["uid"].(float64)),
-		Sid: claims["sid"].(string),
-		Iat: int64(claims["iat"].(float64)),
-	}
-	return jwtToken, nil
+	return nil
 }
 
 func MakePassword(password string) string {
