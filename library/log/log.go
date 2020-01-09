@@ -6,7 +6,7 @@ import (
 	"github.com/pkg/errors"
 	"github.com/rifflock/lfshook"
 	"github.com/sirupsen/logrus"
-	"gosharp/library/config"
+	"gosharp/library/conf/viper"
 	"gosharp/library/file"
 	"path"
 	"time"

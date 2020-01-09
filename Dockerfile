@@ -12,7 +12,7 @@ RUN go mod download
 
 COPY . .
 
-RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags="-s -w" -o gosharp
+RUN CGO_ENABLED=0 GOOS=linux GOARCH=amd64 go build -ldflags="-s -w" -o gosharp gosharp/cmd
 #RUN GOOS=linux GOARCH=amd64 go build -v -o /app/xchef-dashboard/sso-server
 
 
@@ -23,7 +23,7 @@ WORKDIR /app
 COPY --from=builder /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
 COPY --from=builder /etc/ssl/certs/ca-certificates.crt /etc/ssl/certs/
 COPY --from=builder /app/gosharp .
-COPY --from=builder /app/config/conf.yaml ./config/conf.yaml
+COPY --from=builder /app/configs/conf.yaml ./configs/conf.yaml
 COPY --from=builder /app/docs/swagger.json ./docs/gosharp.json
 
 #EXPOSE 8080

@@ -1,8 +1,8 @@
 package utils
 
 import (
-	"gosharp/library/config"
-	"gosharp/library/pkg/snowflake"
+	"gosharp/library/conf/viper"
+	"gosharp/library/snowflake"
 	"net/url"
 	"reflect"
 	"strconv"
@@ -33,7 +33,6 @@ func CastEndTime(endTimeValue string) string {
 		return endTime.Format(DATE_FORMAT)
 	}
 	return endTimeValue
-
 }
 
 func FormatUrl(value string) string {

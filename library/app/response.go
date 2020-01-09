@@ -3,18 +3,10 @@ package app
 import (
 	"fmt"
 	"github.com/gin-gonic/gin"
-	"gosharp/library/auth"
-	rescode "gosharp/library/def"
-	e "gosharp/library/error"
+	"gosharp/library/ecode"
 	"net/http"
 	"strconv"
 )
-
-func SetTokenHeader(c *gin.Context, userId int, sid string) {
-	//设置header
-	token := auth.GenAccessToken(userId, sid)
-	c.Header("Authorization", token)
-}
 
 func SetPagerHeader(c *gin.Context, offset int, len int, total int) {
 	contentRange := fmt.Sprintf("%d-%d", offset, offset+len)
@@ -28,12 +20,12 @@ func SetPagerHeader(c *gin.Context, offset int, len int, total int) {
 func APIResponse(c *gin.Context, success bool, data interface{}, msg string) {
 	var resCode string
 	if success {
-		resCode = rescode.Success
+		resCode = strconv.Itoa(ecode.OK.Code())
 		if msg == "" {
 			msg = "success"
 		}
 	} else {
-		resCode = rescode.Error
+		resCode = strconv.Itoa(ecode.FAIL.Code())
 		if msg == "" {
 			msg = "error"
 		}
@@ -43,10 +35,10 @@ func APIResponse(c *gin.Context, success bool, data interface{}, msg string) {
 
 //自定义错误码
 func APIResponseError(c *gin.Context, data interface{}, err error) {
-	if apiErr, ok := err.(e.APIError); ok {
-		c.JSON(http.StatusOK, gin.H{"rescode": apiErr.Code, "data": data, "msg": apiErr.Error()})
+	if apiErr, ok := err.(ecode.Code); ok {
+		c.JSON(http.StatusOK, gin.H{"rescode": strconv.Itoa(apiErr.Code()), "data": data, "msg": apiErr.Message()})
 	}
-	c.JSON(http.StatusOK, gin.H{"rescode": rescode.Error, "data": data, "msg": err.Error()})
+	c.JSON(http.StatusOK, gin.H{"rescode": strconv.Itoa(ecode.FAIL.Code()), "data": data, "msg": err.Error()})
 }
 
 //自由模式 所有参数自定义
@@ -86,5 +78,5 @@ func APIResponseNotAcceptable(c *gin.Context, rescode string, msg string) {
 
 //500
 func APIResponseException(c *gin.Context, msg string) {
-	c.JSON(http.StatusInternalServerError, gin.H{"rescode": rescode.Error, "data": nil, "msg": msg})
+	c.JSON(http.StatusInternalServerError, gin.H{"rescode": ecode.FAIL.Code(), "data": nil, "msg": msg})
 }
