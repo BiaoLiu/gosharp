@@ -58,8 +58,4 @@ var (
 	AreaLimit             = add(-688) // 地理区域限制
 	CopyrightLimit        = add(-689) // 版权限制
 	FailToAddMoral        = add(-701) // 扣节操失败
-
-	Degrade     = add(-1200) // 被降级过滤的请求
-	RPCNoClient = add(-1201) // rpc服务的client都不可用
-	RPCNoAuth   = add(-1202) // rpc服务的client没有授权
 )

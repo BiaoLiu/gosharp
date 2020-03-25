@@ -2,8 +2,8 @@ package http
 
 import (
 	"github.com/stretchr/testify/assert"
-	"product-recommend/config"
-	"product-recommend/utils/log"
+	"gosharp/library/conf/viper"
+	"gosharp/library/log"
 	"testing"
 )
 

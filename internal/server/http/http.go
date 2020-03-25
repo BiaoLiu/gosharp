@@ -24,7 +24,7 @@ type ApiServer struct {
 	server *http.Server
 }
 
-// New new a bm server.
+// New new a server.
 func New(s *service.Service) (httpSrv *ApiServer) {
 	svc = s
 	engine := gin.Default()

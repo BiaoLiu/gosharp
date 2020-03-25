@@ -4,10 +4,10 @@ import (
 	"crypto/tls"
 	"errors"
 	"fmt"
+	"gosharp/library/log"
 	"io"
 	"io/ioutil"
 	"net/http"
-	"solution-module/library/log"
 	"strconv"
 
 	"github.com/bitly/go-simplejson"
